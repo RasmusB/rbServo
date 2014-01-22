@@ -1,0 +1,269 @@
+Cmp-Mod V01 Created by CvPcb (2013-02-27 BZR 3976)-testing date = 22/10/2013 16:17:14
+
+BeginCmp
+TimeStamp = /50B642BA/50B64366;
+Reference = C1;
+ValeurCmp = 100n;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B65E87;
+Reference = C2;
+ValeurCmp = 0µ1;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B65E96;
+Reference = C3;
+ValeurCmp = 0µ1;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64330;
+Reference = C4;
+ValeurCmp = 12p;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6433C;
+Reference = C5;
+ValeurCmp = 10p;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B643C8;
+Reference = C6;
+ValeurCmp = 100n;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B643D4;
+Reference = C7;
+ValeurCmp = 100n;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B643FE;
+Reference = C8;
+ValeurCmp = 100n;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64354;
+Reference = C9;
+ValeurCmp = cCAN;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644BD;
+Reference = C10;
+ValeurCmp = 100n;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64426;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = SMD-0603-LED;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644D4;
+Reference = D2;
+ValeurCmp = LED;
+IdModule  = SMD-0603-LED;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644F2;
+Reference = IC1;
+ValeurCmp = ATMEGA32M1_QFN32;
+IdModule  = QFN-32_0mm65;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2E7125;
+Reference = ISP1;
+ValeurCmp = MISO;
+IdModule  = HOLE_VIA-0mm635;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2E713A;
+Reference = ISP2;
+ValeurCmp = SCK;
+IdModule  = HOLE_VIA-0mm635;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2E7140;
+Reference = ISP3;
+ValeurCmp = RES;
+IdModule  = HOLE_VIA-0mm635;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2E7146;
+Reference = ISP4;
+ValeurCmp = VCC;
+IdModule  = HOLE_VIA-0mm635;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2E714C;
+Reference = ISP5;
+ValeurCmp = MOSI;
+IdModule  = HOLE_VIA-0mm635;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2E7152;
+Reference = ISP6;
+ValeurCmp = GND;
+IdModule  = HOLE_VIA-0mm635;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2DBC58;
+Reference = M+1;
+ValeurCmp = +;
+IdModule  = connect_pin_header_1x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2DBC52;
+Reference = M-1;
+ValeurCmp = -;
+IdModule  = connect_pin_header_1x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2DC381;
+Reference = P1;
+ValeurCmp = EXTCON;
+IdModule  = MPT_0,5/2,54x04;
+EndCmp
+
+BeginCmp
+TimeStamp = /4E74CD8E;
+Reference = POT1;
+ValeurCmp = Vcc;
+IdModule  = connect_pin_header_1x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4E74CCDC;
+Reference = POT2;
+ValeurCmp = POT;
+IdModule  = connect_pin_header_1x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4E74CD8F;
+Reference = POT3;
+ValeurCmp = GND;
+IdModule  = connect_pin_header_1x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6596F;
+Reference = Q1;
+ValeurCmp = PMF170XP;
+IdModule  = SOT323_SC-70-REFLOW;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6440C;
+Reference = R1;
+ValeurCmp = 12k;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64412;
+Reference = R2;
+ValeurCmp = 22k;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6499F;
+Reference = R3;
+ValeurCmp = 400;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B649A5;
+Reference = R4;
+ValeurCmp = 400;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64348;
+Reference = R5;
+ValeurCmp = 10k;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64360;
+Reference = R6;
+ValeurCmp = rCAN;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6435A;
+Reference = R7;
+ValeurCmp = rCAN;
+IdModule  = SMD-R_1005_EIA0402-NOMINAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/525698EE;
+Reference = R8;
+ValeurCmp = 200m;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/5256B7BB;
+Reference = U1;
+ValeurCmp = TJA1051;
+IdModule  = SOT782-1_HVSON8;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64390;
+Reference = U2;
+ValeurCmp = LM3480;
+IdModule  = SOT-23_TO-236AB;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/524EAC24;
+Reference = U3;
+ValeurCmp = DRV8832-DRC;
+IdModule  = S-PVSON-N10;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644E7;
+Reference = X1;
+ValeurCmp = 16MHz;
+IdModule  = SMD-CX2520;
+EndCmp
+
+EndListe

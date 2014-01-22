@@ -1,0 +1,220 @@
+Cmp-Mod V01 Created by CvPcb (2012-oct-18)-testing date = Wed 28 Nov 2012 08:48:27 PM CET
+
+BeginCmp
+TimeStamp = /50B642BA/50B64366;
+Reference = C1;
+ValeurCmp = 100n;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B65E87;
+Reference = C2;
+ValeurCmp = 0µ1;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B65E96;
+Reference = C3;
+ValeurCmp = 0µ1;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64330;
+Reference = C4;
+ValeurCmp = 12p;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6433C;
+Reference = C5;
+ValeurCmp = 10p;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B643C8;
+Reference = C6;
+ValeurCmp = 100n;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B643D4;
+Reference = C7;
+ValeurCmp = 100n;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B643FE;
+Reference = C8;
+ValeurCmp = 100n;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64354;
+Reference = C9;
+ValeurCmp = cCAN;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644BD;
+Reference = C10;
+ValeurCmp = 100n;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644A5;
+Reference = C11;
+ValeurCmp = 100n;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64426;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = SMD-0805-LED;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644D4;
+Reference = D2;
+ValeurCmp = LED;
+IdModule  = SMD-0805-LED;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644F2;
+Reference = IC1;
+ValeurCmp = ATMEGA32M1_QFN32;
+IdModule  = TQFP-32;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B6476E;
+Reference = ISP1;
+ValeurCmp = ATMEL_ISP-6P;
+IdModule  = DIN_41651_3x2;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B681EA;
+Reference = LOGO1;
+ValeurCmp = RB_Logo;
+IdModule  = LOGO_RB;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F2DC381;
+Reference = P1;
+ValeurCmp = EXTCON;
+IdModule  = MPT_0,5/2,54x04;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B64948;
+Reference = P2;
+ValeurCmp = POT;
+IdModule  = MPT_0,5/2,54x03;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B64B0C;
+Reference = P3;
+ValeurCmp = MOTOR;
+IdModule  = MPT_0,5/2,54x02;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6596F;
+Reference = Q1;
+ValeurCmp = PMF170XP;
+IdModule  = SC70-3;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6440C;
+Reference = R1;
+ValeurCmp = 12k;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64412;
+Reference = R2;
+ValeurCmp = 22k;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6499F;
+Reference = R3;
+ValeurCmp = 400;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B649A5;
+Reference = R4;
+ValeurCmp = 400;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64348;
+Reference = R5;
+ValeurCmp = 10k;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64360;
+Reference = R6;
+ValeurCmp = rCAN;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B6435A;
+Reference = R7;
+ValeurCmp = rCAN;
+IdModule  = SMD-0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64389;
+Reference = U1;
+ValeurCmp = TJA1050;
+IdModule  = SOIC-8;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64390;
+Reference = U2;
+ValeurCmp = LM3480;
+IdModule  = SOT-23_TO-236AB;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B64498;
+Reference = U3;
+ValeurCmp = DRV8837-DSG;
+IdModule  = SMD-PWSON-8;
+EndCmp
+
+BeginCmp
+TimeStamp = /50B642BA/50B644E7;
+Reference = X1;
+ValeurCmp = 16MHz;
+IdModule  = XTAL_SMD_2mm5x2mm;
+EndCmp
+
+EndListe
