@@ -8,6 +8,8 @@
 // TODO: Create timer with mS resolution for PID loop
 
 #include <avr/io.h>
+#include <stdlib.h>
+#include <avr/interrupt.h>
 
 #include "pwm.h"
 #include "board.h"
@@ -17,12 +19,24 @@
 
 void init(void) __attribute__((constructor));
 
+extern uint16_t sensorPotGetRaw();
+
+uint8_t mirrorMCUSR __attribute__ ((section (".noinit")));
+
 int main () {
 
 	uint8_t i;
-	uint8_t j;
 	uint16_t rxID;
 	uint8_t rxDLC;
+
+	char asciiMessage[9];
+
+	uint8_t msgChoice;
+
+	mirrorMCUSR = MCUSR;
+
+	pwmSetDutyCycle( 0xFFFF );
+
 	// TODO: Check for new CAN data. Update behavior accordingly.
 
 	// TODO: Check if enough time has elapsed. If so, update PID.
@@ -34,26 +48,60 @@ int main () {
 		 *	set "data valid" flag
 		 */
 
-	redLEDpwm(0);
 	while (1) {
 
-		canbusRXsetup(0);
+		uint16_t tempVBatt = sensorVBattGetValue();
+		uint16_t tempVBattRaw = sensorVBattGetRaw();
+		int16_t tempPot = sensorPotGetValue();
+		uint16_t tempPotRaw = sensorPotGetRaw();
 
-		// Busy-Wait for a CAN message
-		while (CANSTMOB == 0);
-		CANSTMOB = 0x00;
+//		pwmSetDutyCycle( tempPotRaw << 6 );
 
-		rxID = (CANIDT1 << 3) + (CANIDT2 >> 5);
-		rxDLC = CANCDMOB & 0x0F;
+		if (messageTick > 0) {
+			messageTick = 0;
 
-		//redLEDpwm(CANIDT1);
+			if (msgChoice & 1) {
 
-		for (i=0; i < rxDLC; i++) {
-			canbusDataBuffer[i] = CANMSG;
+				canbusTxBuffer[0] = (uint8_t) (tempPot >> 8);
+				canbusTxBuffer[1] = (uint8_t) (tempPot);
+				canbusTxBuffer[2] = (uint8_t) (tempPotRaw >> 8);
+				canbusTxBuffer[3] = (uint8_t) (tempPotRaw);
+				canbusTXsetup(000, 4, 0);
+
+			} else {
+
+				itoa(tempPot, asciiMessage, 10);
+
+				for (i=0; i < 8; i++) {
+					canbusTxBuffer[i] = asciiMessage[i];
+				}
+				canbusTXsetup(010, 8, 0);
+
+			} msgChoice++;
+
 		}
 
-		// Send message
-		canbusTXsetup(rxID, rxDLC, 0);
+
+
+//		canbusRXsetup(0);
+//
+//		// Busy-Wait for a CAN message
+//		while (CANSTMOB == 0);
+//		CANSTMOB = 0x00;
+//
+//		rxID = (CANIDT1 << 3) + (CANIDT2 >> 5);
+//		rxDLC = CANCDMOB & 0x0F;
+//
+//		for (i=0; i < rxDLC; i++) {
+//			canbusRxDataBuffer[i] = CANMSG;
+//		}
+//
+//		if (rxID == 0x123 && rxDLC == 2) {
+//			pwmSetDutyCycle((canbusRxDataBuffer[0] << 8) + canbusRxDataBuffer[1]);
+//		}
+//
+//		//canbusTXsetup(rxID, rxDLC, 0); 	// This just echos the last received message
+
 	}
 
 
@@ -64,25 +112,18 @@ int main () {
 void init() {
 	boardInit();
 	//eepromReadConfiguration();
-	//adcInit();
+	adcInit();
 
 	pwmInit();
 
 	canbusInit();
 
 	// TODO: Initialize PID with EEPROM values
-		// TODO: PID setpoint = current position
-	//redLEDoff();
+	// TODO: PID setpoint = current position
 
-	// First boot since reflash via bootloader
-	/*
-	if (BootStayIn) {
-		BootStayIn = 0;
-		eepromWriteConfiguration();
-	}
-	*/
+
 	// Enable Global Interrupts
-	SREG |= _BV(SREG_I);
+	sei();
 
 	// TODO: Send CANBUS "Application Ready"
 	// TODO: Wait for CANBUS "OK" response

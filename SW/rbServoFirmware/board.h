@@ -16,6 +16,4 @@ void redLEDoff ( void );
 
 void redLEDtoggle ( void );
 
-void redLEDpwm ( uint8_t dutyCycle );
-
 #endif /* BOARD_H_ */

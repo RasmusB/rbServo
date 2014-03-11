@@ -9,7 +9,8 @@
 #define CANBUS_H_
 
 extern uint8_t canbusID;
-extern uint8_t canbusDataBuffer[8];
+extern uint8_t canbusTxBuffer[8];
+extern uint8_t canbusRxBuffer[8];
 
 void canbusInit( void );
 uint8_t canbusTXsetup( uint16_t messageID, uint8_t messageDLC, uint8_t prio );

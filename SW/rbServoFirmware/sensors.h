@@ -8,8 +8,11 @@
 #ifndef SENSORS_H_
 #define SENSORS_H_
 
-#define V_BATT_FB PD6
-
+void sensorInit( void );
 void adcInit( void );
+uint16_t sensorVBattGetRaw(void);
+uint16_t sensorVBattGetValue(void);
+uint16_t sensorPotGetRaw(void);
+int16_t sensorPotGetValue(void);
 
 #endif /* SENSORS_H_ */

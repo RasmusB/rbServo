@@ -8,7 +8,9 @@
 #ifndef PWM_H_
 #define PWM_H_
 
+extern volatile uint8_t messageTick;
+
 void pwmInit ( void );
-void pwmSetDutyCycle (uint8_t pwmChannel, uint8_t pwmDutyCycle);
+void pwmSetDutyCycle(uint16_t newDutyCycle);
 
 #endif /* PWM_H_ */

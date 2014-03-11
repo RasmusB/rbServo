@@ -9,47 +9,38 @@
 #include <avr/interrupt.h>
 #include "pwm.h"
 
-#define PWMCHANNELS 3
-// CHANNEL 00 = RED LED
-
-#define PWMMASK_PORTB 0x00
-#define PWMMASK_PORTC 0x10 // PWM on PC4
-#define PWMMASK_PORTD 0x00
-
-uint8_t pwmDutyCycle[PWMCHANNELS];
-
-uint8_t pwmNextPinStatePortB;
-uint8_t pwmNextPinStatePortC;
-uint8_t pwmNextPinStatePortD;
+volatile uint8_t messageTick = 0;
 
 void pwmInit () {
 
-	// Set up Timer0 to run at full speed
-	TCCR0B |= _BV(CS00);
+	// TIMER0 init
+	// Creates a 1ms interrupt
+	TCCR0A |= _BV(WGM01);				//Enable CTC mode
+	TIMSK0 |= _BV(OCIE0A);				// Enable compare interrupt
+	OCR0A = 0xF9;						// Set timer TOP value to d249
+	TCCR0B |= _BV(CS01) | _BV(CS00);	// Start Timer0 at Fcpu/64
 
-	// Enable overflow interrupt
-	TIMSK0 |= _BV(TOIE0);
+	// TIMER1 init
+	// Creates a PWM waveform
+	// TODO: Add a second channel for RevB
+	TCCR1A |= _BV(COM1B1);				// Non-inverted PWM waveform
+	TCCR1B |= _BV(WGM13) | _BV(CS10);	// PFC PWM mode, start timer at Fcpu
+	ICR1 = 0xFFFF;						// Set PWM resolution
 }
 
-void pwmSetDutyCycle (uint8_t pwmChannel, uint8_t newDutyCycle) {
-	if (!pwmChannel < PWMCHANNELS) {
-		pwmDutyCycle[pwmChannel] = newDutyCycle;
-	} // Silently ignore errors
+void pwmSetDutyCycle(uint16_t newDutyCycle) {
+	OCR1B = newDutyCycle;
 }
 
-ISR(TIMER0_OVF_vect) {
-	// Initialize start conditions
-	static uint8_t pwmDutyCycleCounter = 0xFF;
-	static uint8_t pwmDutyCycleBuffer[PWMCHANNELS];
+ISR(TIMER0_COMPA_vect) {
+	static uint16_t msec;
 
-	if ( pwmDutyCycleCounter == 0xFF ) {
-		PORTC &= ~_BV(PC4);
-		pwmDutyCycleBuffer[0] = pwmDutyCycle[0];
+	if (msec == 999) {
+		msec = 0;
+		messageTick++;
+	} else {
+		msec++;
 	}
 
-	if ( pwmDutyCycleCounter == pwmDutyCycleBuffer[0] ) {
-		PORTC |= _BV(PC4);
-	}
-
-	pwmDutyCycleCounter--;
 }
+

@@ -17,7 +17,8 @@
 
 void boardInit () {
 
-	LED_DDR |= _BV(LED_PIN);
+//	LED_DDR |= _BV(LED_PIN);	// Normal output
+	DDRC |= _BV(PORTC1);		//PWM output
 
 }
 
@@ -34,10 +35,4 @@ void redLEDoff() {
 void redLEDtoggle() {
 
 	PORTC ^= _BV(LED_PIN);
-}
-
-// TODO: Flytta bort denna funktion härifrån
-void redLEDpwm ( uint8_t dutyCycle ) {
-	pwmSetDutyCycle (LED_PWM_CHANNEL, dutyCycle);
-
 }

@@ -11,9 +11,10 @@
 #define MAX_MOb 5
 
 uint8_t canbusID;
-uint8_t canbusDataBuffer[8];
+uint8_t canbusTxBuffer[8];
+uint8_t canbusRxBuffer[8];
 
-//Static function prototyes
+//Static function prototypes
 static uint8_t _canbusGetMOb( uint8_t prio );
 
 void canbusInit () {
@@ -40,8 +41,9 @@ void canbusInit () {
 	CANBT3 = 0x13;
 
 	// Write CANGIE to your desired configuration
+	// Be careful with ENOVRT, it might crash all interrupt handling...
 	// TODO: Enable interrupts for emergency messages! Don't forget MOb-specific interrupts.
-	CANGIE = (uint8_t) ~_BV(ENIT);
+	CANGIE = 0x00;
 	CANIE1 = 0x00;
 	CANIE2 = 0x00;
 
@@ -78,7 +80,6 @@ uint8_t canbusTXsetup( uint16_t messageID, uint8_t messageDLC, uint8_t prio ) {
 	//	Write CANIDT1, CANIDT2, CANIDT3 and CANIDT4 to the CAN ID value (see IDE bit below)
 	//	Write CANIDT4.RTRTAG=0 for CAN Data Frame, or =1 for CAN Remote Frame
 	//	Write all unused/reserved bits=0
-	// TODO: Just dummy values for now... CANID = 0x001, data frame.
 
 	CANIDT4 = 0x00;
 	CANIDT3 = 0x00;
@@ -98,7 +99,7 @@ uint8_t canbusTXsetup( uint16_t messageID, uint8_t messageDLC, uint8_t prio ) {
 	//	If CANPAGE.AINC=1 you must change the CANPAGE.INDXn value for each CANMSG write
 
 	for (i = 0; i < messageDLC; i++) {
-		CANMSG = canbusDataBuffer[i];
+		CANMSG = canbusTxBuffer[i];
 	}
 
 	//	1: Write CANCDMOB.CONMOBn=01 enable transmission
@@ -117,7 +118,6 @@ uint8_t canbusTXsetup( uint16_t messageID, uint8_t messageDLC, uint8_t prio ) {
 
 uint8_t canbusRXsetup(uint8_t prio) {
 
-	uint8_t i;
 	uint8_t selectedMOb;
 
 	// Check for available MOb, return if none
