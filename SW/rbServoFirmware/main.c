@@ -35,7 +35,7 @@ int main () {
 
 	mirrorMCUSR = MCUSR;
 
-	pwmSetDutyCycle( 0xFFFF );
+	//pwmSetDutyCycle( 0xFFFF );
 
 	// TODO: Check for new CAN data. Update behavior accordingly.
 

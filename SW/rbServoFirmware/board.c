@@ -17,8 +17,8 @@
 
 void boardInit () {
 
-//	LED_DDR |= _BV(LED_PIN);	// Normal output
-	DDRC |= _BV(PORTC1);		//PWM output
+	LED_DDR |= _BV(LED_PIN);	// Normal output
+//	DDRC |= _BV(PORTC1);		//PWM output
 
 }
 
