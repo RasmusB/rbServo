@@ -38,7 +38,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:rbServoProto-cache
+LIBS:rbServo-cache
 EELAYER 24 0
 EELAYER END
 $Descr A4 11693 8268

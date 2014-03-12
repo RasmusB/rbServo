@@ -38,7 +38,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:rbServoProto-cache
+LIBS:rbServo-cache
 EELAYER 24 0
 EELAYER END
 $Descr A4 11693 8268
@@ -160,7 +160,7 @@ $Sheet
 S 5050 3050 1700 2050
 U 50B642BA
 F0 "Core" 50
-F1 "../common/rbServoCore.sch" 50
+F1 "rbServoCore.sch" 50
 F2 "M+" O R 6750 4400 60 
 F3 "M-" O R 6750 4600 60 
 F4 "aPot" I L 5050 4550 60 
