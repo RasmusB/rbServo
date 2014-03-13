@@ -8,8 +8,10 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "pwm.h"
+#include "board.h"
 
-volatile uint8_t messageTick = 0;
+volatile uint8_t secondTick;
+volatile uint8_t redLEDdutyCycle;
 
 void pwmInit () {
 
@@ -32,12 +34,28 @@ void pwmSetDutyCycle(uint16_t newDutyCycle) {
 	OCR1B = newDutyCycle;
 }
 
+void pwmSetRedLEDdutyCycle(uint8_t newDutyCycle) {
+	redLEDdutyCycle = newDutyCycle;
+}
+
 ISR(TIMER0_COMPA_vect) {
+	static uint8_t pwmCycle;
 	static uint16_t msec;
 
+	// Update PWM cycle counter
+	if (pwmCycle == 15) {
+		pwmCycle = 0;
+	} else pwmCycle++;
+
+	// Update IO accordingly
+	if (pwmCycle == 0 || pwmCycle >= redLEDdutyCycle) {
+		redLEDoff();
+	} else redLEDon();
+
+	//Update Timer
 	if (msec == 999) {
 		msec = 0;
-		messageTick++;
+		secondTick++;
 	} else {
 		msec++;
 	}

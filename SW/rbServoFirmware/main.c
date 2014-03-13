@@ -55,10 +55,10 @@ int main () {
 		int16_t tempPot = sensorPotGetValue();
 		uint16_t tempPotRaw = sensorPotGetRaw();
 
-//		pwmSetDutyCycle( tempPotRaw << 6 );
+		pwmSetRedLEDdutyCycle( tempPotRaw >> 6 );
 
-		if (messageTick > 0) {
-			messageTick = 0;
+		if (secondTick > 0) {
+			secondTick = 0;
 
 			if (msgChoice & 1) {
 
