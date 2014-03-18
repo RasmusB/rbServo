@@ -62,7 +62,7 @@ F 1 "EXTCON" V 3850 3550 50  0000 C CNN
 F 2 "" H 3800 3550 60  0001 C CNN
 F 3 "" H 3800 3550 60  0001 C CNN
 	1    3800 3550
-	-1   0    0    1   
+	-1   0    0    -1  
 $EndComp
 Text Label 7300 4400 2    60   ~ 0
 MOTOR+
