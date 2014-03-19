@@ -1,5 +1,5 @@
 (fp_lib_table
-  (lib (name SMD_Discrete)(type KiCad)(uri ${KIRBPRETTY}/SMD-Discrete-IPC_C.pretty)(options "")(descr ""))
+  (lib (name SMD_DiscreteC)(type KiCad)(uri ${KIRBPRETTY}/SMD-Discrete-IPC_C.pretty)(options "")(descr ""))
   (lib (name SMD_Tantalum)(type KiCad)(uri ${KIRBPRETTY}/SMD-Tantalum-IPC_B.pretty)(options "")(descr ""))
   (lib (name rbv_smd)(type Legacy)(uri ${KIRBLEGACY}/rbv_smd.mod)(options "")(descr ""))
   (lib (name rbv_connectors)(type Legacy)(uri ${KIRBLEGACY}/rbv_connectors.mod)(options "")(descr ""))

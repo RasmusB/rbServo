@@ -286,13 +286,13 @@ F 3 "" H 1900 950 60  0001 C CNN
 	1    1900 950 
 	1    0    0    -1  
 $EndComp
-Text Label 6900 4750 2    60   ~ 0
+Text Label 6950 4750 2    60   ~ 0
 ISP_SCK
-Text Label 6900 4550 2    60   ~ 0
+Text Label 6950 4550 2    60   ~ 0
 ISP_MISO
 Text Label 3500 2750 0    60   ~ 0
 ISP_RES
-Text Label 6900 4650 2    60   ~ 0
+Text Label 6950 4650 2    60   ~ 0
 ISP_MOSI
 $Comp
 L C C206
@@ -410,7 +410,7 @@ Text Label 7800 3650 0    60   ~ 0
 PWM_B
 Text Label 7800 3300 0    60   ~ 0
 m_EN
-Text Label 6800 5050 2    60   ~ 0
+Text Label 6800 2750 2    60   ~ 0
 m_EN
 $Comp
 L R R201
@@ -458,27 +458,27 @@ F 3 "" H 1150 3050 60  0001 C CNN
 $EndComp
 Text Label 1600 3850 2    60   ~ 0
 uBattFB
-Text Label 6900 3150 2    60   ~ 0
+Text Label 6900 4850 2    60   ~ 0
 uBattFB
 $Comp
 L LED D201
 U 1 1 50B64426
-P 2000 3500
-F 0 "D201" H 2000 3600 50  0000 C CNN
-F 1 "LED" H 2000 3400 50  0000 C CNN
-F 2 "" H 2000 3500 60  0001 C CNN
-F 3 "" H 2000 3500 60  0001 C CNN
-	1    2000 3500
+P 2000 4200
+F 0 "D201" H 2000 4300 50  0000 C CNN
+F 1 "LED" H 2000 4100 50  0000 C CNN
+F 2 "" H 2000 4200 60  0001 C CNN
+F 3 "" H 2000 4200 60  0001 C CNN
+	1    2000 4200
 	0    -1   1    0   
 $EndComp
 Text Label 2000 3000 3    60   ~ 0
 ledA
-Text Label 6900 2550 2    60   ~ 0
+Text Label 6900 3950 2    60   ~ 0
 ledA
 Wire Wire Line
 	9200 5250 9200 5000
 Wire Wire Line
-	6350 4550 6900 4550
+	6350 4550 6950 4550
 Connection ~ 4000 3650
 Wire Wire Line
 	3750 3650 4450 3650
@@ -490,7 +490,7 @@ Wire Wire Line
 Wire Wire Line
 	1900 6950 1350 6950
 Wire Wire Line
-	6900 5050 6350 5050
+	6900 2750 6350 2750
 Wire Wire Line
 	3500 2750 4450 2750
 Connection ~ 5350 5550
@@ -545,7 +545,7 @@ Wire Wire Line
 Wire Wire Line
 	3700 4200 3700 4350
 Wire Wire Line
-	6900 4650 6350 4650
+	6950 4650 6350 4650
 Wire Wire Line
 	3150 1250 3300 1250
 Wire Wire Line
@@ -578,7 +578,7 @@ Connection ~ 4450 6850
 Wire Wire Line
 	4000 1950 4000 2100
 Wire Wire Line
-	8400 3650 7800 3650
+	7800 3650 8400 3650
 Wire Wire Line
 	7800 3550 8400 3550
 Wire Wire Line
@@ -591,7 +591,7 @@ Wire Wire Line
 	3350 3650 3150 3650
 Connection ~ 3150 3650
 Wire Wire Line
-	6350 4750 6900 4750
+	6350 4750 6950 4750
 Wire Wire Line
 	10000 3500 10650 3500
 Wire Wire Line
@@ -623,9 +623,9 @@ Wire Wire Line
 	1150 3850 1600 3850
 Connection ~ 1150 3850
 Wire Wire Line
-	6900 3150 6350 3150
+	6900 4850 6350 4850
 Wire Wire Line
-	6350 2550 6900 2550
+	6350 3950 6900 3950
 $Comp
 L C C211
 U 1 1 50B644BD
@@ -637,25 +637,25 @@ F 3 "" H 10100 2700 60  0001 C CNN
 	1    10100 2700
 	1    0    0    -1  
 $EndComp
-Text Label 6900 2750 2    60   ~ 0
+Text Label 6900 3050 2    60   ~ 0
 aPOT
 Wire Wire Line
-	6900 2750 6350 2750
-Text Label 6900 2650 2    60   ~ 0
+	6900 3050 6350 3050
+Text Label 6900 4050 2    60   ~ 0
 ledB
 Wire Wire Line
-	6350 2650 6900 2650
+	6350 4050 6900 4050
 Text Label 2400 3000 3    60   ~ 0
 ledB
 $Comp
 L LED D202
 U 1 1 50B644D4
-P 2400 3500
-F 0 "D202" H 2400 3600 50  0000 C CNN
-F 1 "LED" H 2400 3400 50  0000 C CNN
-F 2 "" H 2400 3500 60  0001 C CNN
-F 3 "" H 2400 3500 60  0001 C CNN
-	1    2400 3500
+P 2400 4200
+F 0 "D202" H 2400 4300 50  0000 C CNN
+F 1 "LED" H 2400 4100 50  0000 C CNN
+F 2 "" H 2400 4200 60  0001 C CNN
+F 3 "" H 2400 4200 60  0001 C CNN
+	1    2400 4200
 	0    -1   1    0   
 $EndComp
 Wire Wire Line
@@ -717,13 +717,13 @@ Text HLabel 10650 3500 2    60   Output ~ 0
 M+
 Text HLabel 10650 3600 2    60   Output ~ 0
 M-
-Text HLabel 6900 2750 2    60   Input ~ 0
+Text HLabel 6900 3050 2    60   Input ~ 0
 aPot
-Text HLabel 6900 4550 2    60   Output ~ 0
+Text HLabel 6950 4550 2    60   Output ~ 0
 ISP_MISO
-Text HLabel 6900 4650 2    60   Input ~ 0
+Text HLabel 6950 4650 2    60   Input ~ 0
 ISP_MOSI
-Text HLabel 6900 4750 2    60   Input ~ 0
+Text HLabel 6950 4750 2    60   Input ~ 0
 ISP_SCK
 Text HLabel 4600 6200 2    60   BiDi ~ 0
 CAN_HIGH
@@ -734,31 +734,31 @@ Connection ~ 4450 7500
 $Comp
 L R R203
 U 1 1 50B6499F
-P 2000 4200
-F 0 "R203" V 2080 4200 50  0000 C CNN
-F 1 "400" V 2000 4200 50  0000 C CNN
-F 2 "" H 2000 4200 60  0001 C CNN
-F 3 "" H 2000 4200 60  0001 C CNN
-	1    2000 4200
+P 2000 3550
+F 0 "R203" V 2080 3550 50  0000 C CNN
+F 1 "400" V 2000 3550 50  0000 C CNN
+F 2 "" H 2000 3550 60  0001 C CNN
+F 3 "" H 2000 3550 60  0001 C CNN
+	1    2000 3550
 	1    0    0    -1  
 $EndComp
 $Comp
 L R R204
 U 1 1 50B649A5
-P 2400 4200
-F 0 "R204" V 2480 4200 50  0000 C CNN
-F 1 "400" V 2400 4200 50  0000 C CNN
-F 2 "" H 2400 4200 60  0001 C CNN
-F 3 "" H 2400 4200 60  0001 C CNN
-	1    2400 4200
+P 2400 3550
+F 0 "R204" V 2480 3550 50  0000 C CNN
+F 1 "400" V 2400 3550 50  0000 C CNN
+F 2 "" H 2400 3550 60  0001 C CNN
+F 3 "" H 2400 3550 60  0001 C CNN
+	1    2400 3550
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2000 4450 2000 4550
+	2000 4400 2000 4550
 Wire Wire Line
 	2000 4550 2400 4550
 Wire Wire Line
-	2400 4550 2400 4450
+	2400 4550 2400 4400
 Wire Wire Line
 	2200 4650 2200 4550
 Connection ~ 2200 4550
@@ -855,13 +855,11 @@ Wire Wire Line
 Text Label 10000 4300 0    60   ~ 0
 Isense
 Wire Wire Line
-	6350 3050 6900 3050
-Text Label 6900 3050 2    60   ~ 0
+	6350 3850 6900 3850
+Text Label 6900 3850 2    60   ~ 0
 Isense
 NoConn ~ 6350 4450
 NoConn ~ 6350 4350
-NoConn ~ 6350 3850
-NoConn ~ 6350 3950
 NoConn ~ 6350 3450
 NoConn ~ 6350 3250
 $Comp
@@ -877,11 +875,10 @@ F 3 "" H 2400 6850 60  0000 C CNN
 $EndComp
 Wire Wire Line
 	2500 7450 2500 7350
-NoConn ~ 6350 4050
 Wire Wire Line
-	2000 3700 2000 3950
+	2000 3800 2000 4000
 Wire Wire Line
-	2400 3950 2400 3700
+	2400 4000 2400 3800
 $Comp
 L DRV8833-QFN U203
 U 1 1 531338DA
@@ -998,8 +995,6 @@ Text Label 6600 5750 0    60   ~ 0
 ISP_MISO
 Wire Wire Line
 	6600 5750 7050 5750
-NoConn ~ 6350 4850
-NoConn ~ 6350 4950
 $Comp
 L CRYSTAL-4pin X201
 U 1 1 53162274
@@ -1016,4 +1011,10 @@ Wire Wire Line
 Connection ~ 8200 3650
 Text Label 10100 3250 1    60   ~ 0
 Vcp
+Text Label 10050 4100 0    60   ~ 0
+vInt
+Text Label 6950 5050 2    60   ~ 0
+m_FAULT
+Wire Wire Line
+	6350 5050 6950 5050
 $EndSCHEMATC
