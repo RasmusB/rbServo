@@ -5,8 +5,9 @@ All the hardware and software that is needed to build a CAN-BUS servo controller
 
 ### What does it contain?
 
+- `3D` - hardware components
+
 - `HW` - all the hardware design files are in this folder
 
 - `SW` - The software for the servo.
- - `rbServoFirmware`
- - ...
+ - `rbServoFirmware` - Servo controller firmware
