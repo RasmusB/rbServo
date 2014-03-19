@@ -1,4 +1,4 @@
-Cmp-Mod V01 Created by CvPcb (2014-03-01 BZR 4730)-product date = Wed 12 Mar 2014 09:13:46 PM CET
+Cmp-Mod V01 Created by CvPcb (2014-03-01 BZR 4730)-product date = Wed 19 Mar 2014 11:42:44 PM CET
 
 BeginCmp
 TimeStamp = /50B642BA/50B64366;
@@ -123,27 +123,27 @@ BeginCmp
 TimeStamp = /4F2DC381;
 Reference = P101;
 ValeurCmp = EXTCON;
-IdModule  = rbv_connectors:MPT_0,5%2f2,54x04;
+IdModule  = rbv_connectors:MPT_0,5_2,54x04;
 EndCmp
 
 BeginCmp
 TimeStamp = /531660F0;
 Reference = P104;
-ValeurCmp = p5V;
+ValeurCmp = 5V;
 IdModule  = Vias_and_Pads:0.7x1.5mm;
 EndCmp
 
 BeginCmp
 TimeStamp = /53166127;
 Reference = P105;
-ValeurCmp = pGND;
+ValeurCmp = GND;
 IdModule  = Vias_and_Pads:0.7x1.5mm;
 EndCmp
 
 BeginCmp
 TimeStamp = /5316615E;
 Reference = P109;
-ValeurCmp = pA;
+ValeurCmp = Pot;
 IdModule  = Vias_and_Pads:0.7x1.5mm;
 EndCmp
 
