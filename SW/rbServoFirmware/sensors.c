@@ -1,114 +1,61 @@
 /*
- * sensors.c
- *
- *  Created on: Nov 9, 2012
- *      Author: rasmus
- */
+The MIT License (MIT)
+
+Copyright (c) 2014 Rasmus Backman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 #include <avr/io.h>
-#include <avr/interrupt.h>
 
+#include "adc.h"
 #include "board.h"
-
-#define ADC_CHANNEL_VBATT 3
-#define ADC_CHANNEL_POT 4
-
-#define ADMUX_VBATT 0x43
-#define ADMUX_POT 0x44
-
-#define ADBUFFER_VBATT 0
-#define ADBUFFER_POT 1
-
-#define noOfSensors 2
-
-static int16_t _XYmap(int16_t, int16_t, int16_t, int16_t, int16_t);
-static uint8_t _readADC8bit(void);
-static uint16_t _readADC16bit(void);
-
-volatile uint16_t sensorRawValue[noOfSensors];
+#include "eepromConfig.h"
 
 void sensorInit() {
 	// TODO: Lägg till nåt...
 }
 
-void adcInit() {
-
-	// Set prescaler to 8 (16Mhz/8 = 2MHz)
-	ADCSRA |= _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0);
-
-	ADMUX = ADMUX_POT;
-
-	ADCSRA |= _BV(ADEN) | _BV(ADIE);	// Enable ADC & interrupt
-	ADCSRA |= _BV(ADSC);					// Start first conversion
-}
-
 uint16_t sensorVBattGetRaw() {
-	return sensorRawValue[ADBUFFER_VBATT];
+	return adGetValueVbatt();
 }
 
 uint16_t sensorVBattGetValue() {
-	uint32_t temp = sensorRawValue[ADBUFFER_VBATT];
-	// TODO : Make the "magic numbers" calibration parameters
-	temp = (uint32_t) (temp * 121);
-	temp = (uint16_t) (temp / 16);
+	uint32_t temp = adGetValueVbatt();
+	temp = (uint32_t) (temp * sensorVBattScaleValueA);
+	temp = (uint16_t) (temp / sensorVBattScaleValueB);
 
 	return temp;
 }
 
 uint16_t sensorPotGetRaw() {
-	return sensorRawValue[ADBUFFER_POT];
+	return adGetValuePot();
 }
 
 int16_t sensorPotGetValue() {
-	int32_t temp = sensorRawValue[ADBUFFER_POT];
+	int32_t temp = adGetValuePot();
 	// TODO : Make the "magic numbers" calibration parameters
-	temp = (int32_t) (temp * 225);
-	temp = (int32_t) (temp / 128);
-	temp = temp - 900;
+	temp = (int32_t) (temp * sensorPotScaleValueA);
+	temp = (int32_t) (temp / sensorPotScaleValueB);
+	temp = temp + sensorPotScaleOffset;
 
 	return (int16_t) temp;
-}
-
-ISR(ADC_vect) {
-
-	if ( ADMUX  == ADMUX_VBATT ) {
-		sensorRawValue[ADBUFFER_VBATT] = ADCL;
-		sensorRawValue[ADBUFFER_VBATT] += (ADCH << 8);
-		ADMUX = ADMUX_POT;
-	}
-	else if (ADMUX == ADMUX_POT ) {
-		sensorRawValue[ADBUFFER_POT] = ADCL;
-		sensorRawValue[ADBUFFER_POT] += (ADCH << 8);
-		ADMUX = ADMUX_VBATT;
-	}
-
-	ADCSRA |= _BV(ADSC);	// Start next conversion
-
-}
-
-static int16_t _XYmap( int16_t x, int16_t xMin, int16_t xMax, int16_t yMin, int16_t yMax) {
-
-	return (x - xMin) * (yMax - yMin) / (xMax - xMin) + yMin;
-}
-
-static uint8_t _readADC8bit(void) {
-	// Returns the conversion result at a
-	// specific width of 8 bits.
-	// Assumes ADLAR=1 in ADMUX!
-
-	return ADCH;
-}
-
-static uint16_t _readADC16bit(void) {
-	// Returns the conversion result at a
-	// specific width of 16 bits.
-	// Assumes ADLAR=1 in ADMUX!
-
-	int16_t temp;
-
-	temp = ADCL;
-	temp += (ADCH << 8);
-
-	return temp;
 }
 
 

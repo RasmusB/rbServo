@@ -22,15 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef BOARD_H_
-#define BOARD_H_
+#ifndef TIMER_H_
+#define TIMER_H_
 
-void boardInit ( void );
+extern volatile uint8_t secondTick;
 
-void redLEDon ( void );
+void timerInit ( void );
+void timerSetPWMdutyCycle ( uint8_t );
 
-void redLEDoff ( void );
-
-void redLEDtoggle ( void );
-
-#endif /* BOARD_H_ */
+#endif /* TIMER_H_ */
