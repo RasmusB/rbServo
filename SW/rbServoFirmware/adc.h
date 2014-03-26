@@ -22,15 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef BOARD_H_
-#define BOARD_H_
+#ifndef AD_H_
+#define AD_H_
 
-void boardInit ( void );
+void adcInit( void );
+uint16_t adGetValueVbatt( void );
+uint16_t adGetValuePot( void );
 
-void redLEDon ( void );
-
-void redLEDoff ( void );
-
-void redLEDtoggle ( void );
-
-#endif /* BOARD_H_ */
+#endif /* AD_H_ */

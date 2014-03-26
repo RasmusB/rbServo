@@ -22,15 +22,48 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef BOARD_H_
-#define BOARD_H_
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
-void boardInit ( void );
+#include "board.h"
+#include "pwm.h"
 
-void redLEDon ( void );
+volatile uint8_t secondTick;
+volatile uint8_t redLEDdutyCycle;
 
-void redLEDoff ( void );
+void timerInit() {
+	// TIMER0 init
+	// Creates a 1ms interrupt
+	TCCR0A |= _BV(WGM01);				//Enable CTC mode
+	TIMSK0 |= _BV(OCIE0A);				// Enable compare interrupt
+	OCR0A = 0xF9;						// Set timer TOP value to d249
+	TCCR0B |= _BV(CS01) | _BV(CS00);	// Start Timer0 at Fcpu/64
+}
 
-void redLEDtoggle ( void );
+void timerSetPWMdutyCycle ( uint8_t newDutyCycle ) {
+	redLEDdutyCycle = newDutyCycle;
+}
 
-#endif /* BOARD_H_ */
+ISR(TIMER0_COMPA_vect) {
+	static uint8_t pwmCycle;
+	static uint16_t msec;
+
+	// Update PWM cycle counter
+	if (pwmCycle == 15) {
+		pwmCycle = 0;
+	} else pwmCycle++;
+
+	// Update IO accordingly
+	if (pwmCycle == 0 || pwmCycle >= redLEDdutyCycle) {
+		redLEDoff();
+	} else redLEDon();
+
+	//Update Timer
+	if (msec == 999) {
+		msec = 0;
+		secondTick++;
+	} else {
+		msec++;
+	}
+
+}

@@ -1,9 +1,26 @@
 /*
- * eepromConfig.c
- *
- *  Created on: Oct 30, 2012
- *      Author: rasmus
- */
+The MIT License (MIT)
+
+Copyright (c) 2014 Rasmus Backman
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 
 #include <avr/eeprom.h>
 
@@ -11,49 +28,38 @@
 
 // Node specific configuration data is saved in EEPROM.
 // These are the default values that must be changed after flashing.
-uint8_t		EEMEM	eeprom_BootStayIn = 0;
-uint8_t		EEMEM	eeprom_canbusNodeID = 0;
-uint8_t		EEMEM	eeprom_pidEnabled = 0;
-uint8_t		EEMEM	eeprom_pidReversed = 0;
+uint8_t	EEMEM	eeprom_BootStayIn = 0;
+uint8_t	EEMEM	eeprom_canbusNodeID = 0;
 
-uint16_t	EEMEM	eeprom_pidSampleTime = 0;
+uint8_t	EEMEM	eeprom_vBattScaleValueA = 121;
+uint8_t	EEMEM	eeprom_vBattScaleValueB = 16;
 
-float		EEMEM	eeprom_pidKp = 0.0;
-float		EEMEM	eeprom_pidKi = 0.0;
-float		EEMEM	eeprom_pidKd = 0.0;
-float		EEMEM	eeprom_pidOutputMin = 0.0;
-float		EEMEM	eeprom_pidOutputMax = 0.0;
-
+uint8_t	EEMEM	eeprom_sensorPotScaleValueA = 225;
+uint8_t	EEMEM	eeprom_sensorPotScaleValueB = 128;
+int16_t	EEMEM	eeprom_sensorPotScaleOffset = -900;
 
 // Global variables, accessible after eepromReadConfiguration()
-uint8_t		BootStayIn;
-uint8_t		canbusNodeID;
-uint8_t		pidEnabled;
-uint8_t		pidReversed;
+uint8_t			BootStayIn;
+uint8_t			canbusNodeID;
 
-uint16_t	pidSampleTime;
+uint8_t			sensorVBattScaleValueA;
+uint8_t			sensorVBattScaleValueB;
 
-float		pidKp;
-float		pidKi;
-float		pidKd;
-float		pidOutputMin;
-float		pidOutputMax;
-
+uint8_t			sensorPotScaleValueA;
+uint8_t			sensorPotScaleValueB;
+int16_t			sensorPotScaleOffset;
 
 void eepromReadConfiguration () {
 
 	BootStayIn		= eeprom_read_byte(&eeprom_BootStayIn);
 	canbusNodeID	= eeprom_read_byte(&eeprom_canbusNodeID);
-	pidEnabled		= eeprom_read_byte(&eeprom_pidEnabled);
-	pidReversed		= eeprom_read_byte(&eeprom_pidReversed);
 
-	pidSampleTime	= eeprom_read_word(&eeprom_pidSampleTime);
+	sensorVBattScaleValueA = eeprom_read_byte(&eeprom_vBattScaleValueA);
+	sensorVBattScaleValueB = eeprom_read_byte(&eeprom_vBattScaleValueB);
 
-	pidKp			= eeprom_read_float(&eeprom_pidKp);
-	pidKi			= eeprom_read_float(&eeprom_pidKi);
-	pidKd			= eeprom_read_float(&eeprom_pidKd);
-	pidOutputMin	= eeprom_read_float(&eeprom_pidOutputMin);
-	pidOutputMax	= eeprom_read_float(&eeprom_pidOutputMax);
+	sensorPotScaleValueA = eeprom_read_byte(&eeprom_sensorPotScaleValueA);
+	sensorPotScaleValueB = eeprom_read_byte(&eeprom_sensorPotScaleValueB);
+	sensorPotScaleOffset = eeprom_read_word(&eeprom_sensorPotScaleOffset);
 
 }
 
@@ -61,15 +67,5 @@ void eepromWriteConfiguration () {
 
 	eeprom_update_byte(&eeprom_BootStayIn, BootStayIn);
 	eeprom_update_byte(&eeprom_canbusNodeID, canbusNodeID);
-	eeprom_update_byte(&eeprom_pidEnabled, pidEnabled);
-	eeprom_update_byte(&eeprom_pidReversed, pidReversed);
-
-	eeprom_update_word(&eeprom_pidSampleTime, pidSampleTime);
-
-	eeprom_update_float(&eeprom_pidKp, pidKp);
-	eeprom_update_float(&eeprom_pidKi, pidKi);
-	eeprom_update_float(&eeprom_pidKd, pidKd);
-	eeprom_update_float(&eeprom_pidOutputMin, pidOutputMin);
-	eeprom_update_float(&eeprom_pidOutputMax, pidOutputMax);
 
 }
