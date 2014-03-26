@@ -27,28 +27,46 @@ SOFTWARE.
 #include "board.h"
 #include "pwm.h"
 
-#define LED_PIN PC4
-#define LED_DDR DDRC
-#define LED_PORT PORTC
-#define LED_PWM_CHANNEL 0
+#define RED_LED_PIN PC4
+#define RED_LED_DDR DDRC
+#define RED_LED_PORT PORTC
+
+#define MOTOR_EN_PIN PB4
+#define MOTOR_EN_DDR DDRB
+#define MOTOR_EN_PORT PORTB
+
+#define MOTOR_FAULT_PIN PD0
+#define MOTOR_FAULT_DDR DDRD
+#define MOTOR_FAULT_PORT PORTD
 
 void boardInit () {
 
-	LED_DDR |= _BV(LED_PIN);	// Normal output
+	RED_LED_DDR |= _BV(RED_LED_PIN);	// Normal output
+	MOTOR_EN_DDR |= _BV(MOTOR_EN_PIN);	// Normal output
+	// MOTOR_FAULT_DDR already input
+}
 
+void motorENon() {
+
+	MOTOR_EN_PORT |= _BV(MOTOR_EN_PIN);
+}
+
+void motorENoff() {
+
+	MOTOR_EN_PORT &= ~_BV(MOTOR_EN_PIN);
 }
 
 void redLEDon() {
 
-	PORTC |= _BV(LED_PIN);
+	RED_LED_PORT |= _BV(RED_LED_PIN);
 }
 
 void redLEDoff() {
 
-	PORTC &= ~_BV(LED_PIN);
+	RED_LED_PORT &= ~_BV(RED_LED_PIN);
 }
 
 void redLEDtoggle() {
 
-	PORTC ^= _BV(LED_PIN);
+	RED_LED_PORT ^= _BV(RED_LED_PIN);
 }
