@@ -58,4 +58,15 @@ int16_t sensorPotGetValue() {
 	return (int16_t) temp;
 }
 
+uint16_t sensorIsenseGetRaw() {
+	return adGetValueIsense();
+}
+
+uint16_t sensorIsenseGetValue() {
+	uint32_t temp = adGetValueIsense();
+	temp = (uint32_t) (temp * sensorIsenseScaleValueA);
+	temp = (uint16_t) (temp / sensorIsenseScaleValueB);
+
+	return temp;
+}
 

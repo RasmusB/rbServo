@@ -31,6 +31,6 @@ extern uint8_t canbusRxBuffer[8];
 
 void canbusInit( void );
 uint8_t canbusTXsetup( uint16_t messageID, uint8_t messageDLC, uint8_t prio );
-uint8_t canbusRXsetup( uint8_t prio );
+uint8_t canbusRXsetup(uint8_t MObNo, uint16_t idTag, uint16_t idMask, bool remoteFrame, bool remoteFrameMask, bool intEn);
 
 #endif /* CANBUS_H_ */

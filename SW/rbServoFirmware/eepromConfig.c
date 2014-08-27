@@ -31,12 +31,15 @@ SOFTWARE.
 uint8_t	EEMEM	eeprom_BootStayIn = 0;
 uint8_t	EEMEM	eeprom_canbusNodeID = 0;
 
-uint8_t	EEMEM	eeprom_vBattScaleValueA = 121;
-uint8_t	EEMEM	eeprom_vBattScaleValueB = 16;
+uint8_t	EEMEM	eeprom_sensorVbattScaleValueA = 121;
+uint8_t	EEMEM	eeprom_sensorVbattScaleValueB = 16;
 
-uint8_t	EEMEM	eeprom_sensorPotScaleValueA = 225;
-uint8_t	EEMEM	eeprom_sensorPotScaleValueB = 128;
+uint8_t	EEMEM	eeprom_sensorPotScaleValueA = 123;
+uint8_t	EEMEM	eeprom_sensorPotScaleValueB = 64;
 int16_t	EEMEM	eeprom_sensorPotScaleOffset = -900;
+
+uint8_t	EEMEM	eeprom_sensorIsenseScaleValueA = 25;
+uint8_t	EEMEM	eeprom_sensorIsenseScaleValueB = 2;
 
 // Global variables, accessible after eepromReadConfiguration()
 uint8_t			BootStayIn;
@@ -49,17 +52,33 @@ uint8_t			sensorPotScaleValueA;
 uint8_t			sensorPotScaleValueB;
 int16_t			sensorPotScaleOffset;
 
+uint8_t			sensorIsenseScaleValueA;
+uint8_t			sensorIsenseScaleValueB;
+
 void eepromReadConfiguration () {
 
 	BootStayIn		= eeprom_read_byte(&eeprom_BootStayIn);
 	canbusNodeID	= eeprom_read_byte(&eeprom_canbusNodeID);
 
-	sensorVBattScaleValueA = eeprom_read_byte(&eeprom_vBattScaleValueA);
-	sensorVBattScaleValueB = eeprom_read_byte(&eeprom_vBattScaleValueB);
+//	sensorVBattScaleValueA = eeprom_read_byte(&eeprom_vBattScaleValueA);
+//	sensorVBattScaleValueB = eeprom_read_byte(&eeprom_vBattScaleValueB);
 
-	sensorPotScaleValueA = eeprom_read_byte(&eeprom_sensorPotScaleValueA);
-	sensorPotScaleValueB = eeprom_read_byte(&eeprom_sensorPotScaleValueB);
-	sensorPotScaleOffset = eeprom_read_word(&eeprom_sensorPotScaleOffset);
+	sensorVBattScaleValueA = 243;
+	sensorVBattScaleValueB = 32;
+
+//	sensorPotScaleValueA = eeprom_read_byte(&eeprom_sensorPotScaleValueA);
+//	sensorPotScaleValueB = eeprom_read_byte(&eeprom_sensorPotScaleValueB);
+//	sensorPotScaleOffset = eeprom_read_word(&eeprom_sensorPotScaleOffset);
+
+	sensorPotScaleValueA = 119;
+	sensorPotScaleValueB = 64;
+	sensorPotScaleOffset = -942;
+
+//	sensorVBattScaleValueA = eeprom_read_byte(&eeprom_vBattScaleValueA);
+//	sensorVBattScaleValueB = eeprom_read_byte(&eeprom_vBattScaleValueB);
+
+	sensorIsenseScaleValueA = 243;
+	sensorIsenseScaleValueB = 32;
 
 }
 

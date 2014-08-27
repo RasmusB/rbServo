@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 #include <avr/io.h>
+#include <stdbool.h>
 #include "canbus.h"
 
 #define MAX_MOb 5
@@ -69,6 +70,10 @@ void canbusInit () {
 
 	// If you are using time stamping write CANTCON with any desired non-zero value
 
+	// Set up specific MOb:s
+	//canbusRXsetup(MOb, ID, Mask, Remote, Enable Remote Mask, Enable interrupt);
+	//canbusRXsetup(0, 0x0000, 0xFFFC, false, true, false);		// Global RX frames
+
 	// Setup complete, enable CAN controller
 	CANGCON = _BV(ENASTB);
 }
@@ -92,7 +97,7 @@ uint8_t canbusTXsetup( uint16_t messageID, uint8_t messageDLC, uint8_t prio ) {
 
 	//	Make sure the MOb CANSTMOB value is cleared
 	//	The polling or interrupt code must finish with and clear CANSTMOB for this MOb first
-	CANSTMOB = 0x00; 	//TODO: Is manual clearing of CANSTMOB OK in TX?
+	CANSTMOB = 0x00;
 
 	//	Write CANIDT1, CANIDT2, CANIDT3 and CANIDT4 to the CAN ID value (see IDE bit below)
 	//	Write CANIDT4.RTRTAG=0 for CAN Data Frame, or =1 for CAN Remote Frame
@@ -133,16 +138,22 @@ uint8_t canbusTXsetup( uint16_t messageID, uint8_t messageDLC, uint8_t prio ) {
 	return 0;	// Everything went well
 }
 
-uint8_t canbusRXsetup(uint8_t prio) {
+uint8_t canbusRXsetup(uint8_t MObNo, uint16_t idTag, uint16_t idMask, bool remoteFrame, bool remoteFrameMask, bool intEn) {
 
-	uint8_t selectedMOb;
+//	uint8_t selectedMOb;
 
 	// Check for available MOb, return if none
-	selectedMOb = _canbusGetMOb(prio);
-	if (selectedMOb == 0xFF) return 1;
+//	selectedMOb = _canbusGetMOb(MObNo);
+//	if (selectedMOb == 0xFF) return 1;
 
 	//	Select MOb. Also auto increment and byte buffer index 0.
-	CANPAGE = (selectedMOb << 4);
+//	CANPAGE = (selectedMOb << 4);
+
+	// Abort if the requested MOb is unavailable
+	if ( MObNo > MAX_MOb ) return 1;		// Out of range
+	if ( CANEN2 & _BV( MObNo )) return 1;	// Busy
+
+	CANPAGE = (MObNo << 4);
 
 	//	Make sure the MOb CANSTMOB value is cleared
 	//	The polling or interrupt code must finish with and clear CANSTMOB for this MOb first
@@ -151,11 +162,14 @@ uint8_t canbusRXsetup(uint8_t prio) {
 	//	Write CANIDT1, CANIDT2, CANIDT3 and CANIDT4 to the CAN ID value (see IDE bit below)
 	//	Write all unused/reserved bits=0
 	//	Write CANIDT4.RTRTAG=0 for CAN Data Frame, or =1 for CAN Remote Frame
-	// TODO: Why are we clearing these?
-	CANIDT4 = 0x00;
+	if ( remoteFrame ) {
+		CANIDT4 = 0x04;
+	} else {
+		CANIDT4 = 0x00;
+	}
 	CANIDT3 = 0x00;
-	CANIDT2 = 0x00;
-	CANIDT1 = 0x00;
+	CANIDT2 = (uint8_t) ( idTag >> 8);
+	CANIDT1 = (uint8_t) idTag;
 
 	//	Write CANIDM1, CANIDM2, CANIDM3 and CANIDM4 IDMSKn bits to:
 	//		=0 for any IDMSKn bit you want to mask (ignore the corresponding CANIDT.IDTn bit value)
@@ -168,14 +182,20 @@ uint8_t canbusRXsetup(uint8_t prio) {
 	//		=0 will Rx either 11 bit CAN IDs or 29 bit CAN IDs
 	//		=1 will only Rx the CAN ID length set in CANCDMOB.IDE
 
-	CANIDM4 = 0x00;
+	if ( remoteFrameMask ) {
+		CANIDM4 = 0x05;
+	} else {
+		CANIDM4 = 0x01;
+	}
+
 	CANIDM3 = 0x00;
-	CANIDM2 = 0x00;
-	CANIDM1 = 0x00;
+	CANIDM2 = (uint8_t) ( idMask >> 8);
+	CANIDM1 = (uint8_t) idMask;
+
+	// Enable interrupts?
+	if ( intEn ) CANIE2 |= _BV(MObNo);
 
 	//	Write CANCDMOB.CONMOBn=10 enable reception for a normal Rx
-	//	If CANIDM4.IDEMSK is zero
-	//		Also write CANCDMOB.IDE=1 (only use 29 bit IDs in this case)
 	//	if CANIDM4.IDEMSK is one
 	//		Also write CANCDMOB.IDE=0 for 11 bit IDs, or =1 for 29 bit IDs
 	//	Also write CANCDMOB.DLCn to match the number of CANMSG bytes expected to Rx (8 bytes maximum)

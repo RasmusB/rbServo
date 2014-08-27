@@ -25,8 +25,11 @@ SOFTWARE.
 #ifndef PWM_H_
 #define PWM_H_
 
-void pwmInit ( void );
-void timerInit ( void );
-void pwmSetDutyCycle(uint16_t newDutyCycle);
+void motorInit ( void );
+void motorEnable( void );
+void motorDisable( void );
+void _motorSetDutyCycleChannelA(uint16_t newDutyCycle);
+void _motorSetDutyCycleChannelB(uint16_t newDutyCycle);
+void motorSetSpeed( int16_t newMotorSpeed );
 
 #endif /* PWM_H_ */

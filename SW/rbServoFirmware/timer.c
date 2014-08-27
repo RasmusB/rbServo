@@ -26,10 +26,12 @@ SOFTWARE.
 #include <avr/interrupt.h>
 
 #include "board.h"
-#include "pwm.h"
 
-volatile uint8_t secondTick;
+volatile uint8_t run1HzLoop;
+volatile uint8_t run10HzLoop;
+volatile uint8_t run100HzLoop;
 volatile uint8_t redLEDdutyCycle;
+volatile uint8_t grnLEDdutyCycle;
 
 void timerInit() {
 	// TIMER0 init
@@ -40,30 +42,54 @@ void timerInit() {
 	TCCR0B |= _BV(CS01) | _BV(CS00);	// Start Timer0 at Fcpu/64
 }
 
-void timerSetPWMdutyCycle ( uint8_t newDutyCycle ) {
-	redLEDdutyCycle = newDutyCycle;
+void timerSetRedLEDdutyCycle ( uint8_t newDutyCycle ) {
+	redLEDdutyCycle = newDutyCycle >> 4;
+}
+
+void timerSetGrnLEDdutyCycle ( uint8_t newDutyCycle ) {
+	grnLEDdutyCycle = newDutyCycle >> 4;
 }
 
 ISR(TIMER0_COMPA_vect) {
+	// Low-res SW PWM and second counter
+
 	static uint8_t pwmCycle;
-	static uint16_t msec;
+	static uint16_t msecTicks;
 
 	// Update PWM cycle counter
 	if (pwmCycle == 15) {
 		pwmCycle = 0;
-	} else pwmCycle++;
+	} else {
+		pwmCycle++;
+	}
 
 	// Update IO accordingly
 	if (pwmCycle == 0 || pwmCycle >= redLEDdutyCycle) {
 		redLEDoff();
-	} else redLEDon();
-
-	//Update Timer
-	if (msec == 999) {
-		msec = 0;
-		secondTick++;
 	} else {
-		msec++;
+		redLEDon();
+	}
+
+	if (pwmCycle == 0 || pwmCycle >= grnLEDdutyCycle) {
+		grnLEDoff();
+	} else {
+		grnLEDon();
+	}
+
+	//Update Ticks
+	if ((( (uint8_t) msecTicks ) & 0x0F) == 10) {
+		run100HzLoop++;
+	}
+
+	if ((( (uint8_t) msecTicks ) & 0xEF) == 100) {
+		run10HzLoop++;
+	}
+
+	if (msecTicks == 1000) {
+		run1HzLoop++;
+		msecTicks = 0;
+	} else {
+		msecTicks++;
 	}
 
 }

@@ -23,17 +23,20 @@ SOFTWARE.
 */
 
 #include <avr/io.h>
-#include <stdlib.h>
 #include <avr/interrupt.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 #include "adc.h"
 #include "board.h"
 #include "canbus.h"
 #include "eepromConfig.h"
+#include "motor.h"
 //#include "pid.h"
-#include "pwm.h"
 #include "sensors.h"
 #include "timer.h"
+
+#define MOTOR_SPEED 0x1EFF
 
 void init(void) __attribute__((constructor));
 
@@ -43,17 +46,9 @@ uint8_t mirrorMCUSR __attribute__ ((section (".noinit")));
 
 int main () {
 
-	uint8_t i;
-	uint16_t rxID;
-	uint8_t rxDLC;
-
-	char asciiMessage[9];
-
-	uint8_t msgChoice;
+	uint16_t i;
 
 	mirrorMCUSR = MCUSR;
-
-	//pwmSetDutyCycle( 0xFFFF );
 
 	// TODO: Check for new CAN data. Update behavior accordingly.
 
@@ -66,49 +61,36 @@ int main () {
 		 *	set "data valid" flag
 		 */
 
+	grnLEDpwm( 0xFF );
+
+//	motorSetSpeed ( MOTOR_SPEED );
+
+
 	while (1) {
 
-		uint16_t tempVBatt = sensorVBattGetValue();
-		uint16_t tempVBattRaw = sensorVBattGetRaw();
 		int16_t tempPot = sensorPotGetValue();
-		uint16_t tempPotRaw = sensorPotGetRaw();
 
-		pwmSetRedLEDdutyCycle( tempPotRaw >> 6 );
+		if (run10HzLoop) {
+			run10HzLoop = 0;
 
-		if (secondTick > 0) {
-			secondTick = 0;
+			redLEDon();
 
-			if (msgChoice & 1) {
+//			if ( tempPot > 150 ) {
+//				motorSetSpeed ( -MOTOR_SPEED );
+//			} else if ( tempPot < -150 ) {
+//				motorSetSpeed ( MOTOR_SPEED );
+//			}
 
-				itoa(tempVBatt, asciiMessage, 10);
+			canbusTxBuffer[1] = (int8_t) (tempPot >> 8);
+			canbusTxBuffer[0] = (uint8_t) (tempPot & 0xFF);
 
-				for (i=0; i < 4; i++) {
-					canbusTxBuffer[i] = asciiMessage[i];
-				}
+			canbusTXsetup(010, 2, 1);
 
-				canbusTxBuffer[6] = (uint8_t) tempVBattRaw >> 6;
-				canbusTxBuffer[7] = (uint8_t) tempVBattRaw;
-
-				canbusTXsetup(000, 8, 0);
-
-			} else {
-
-				itoa(tempPot, asciiMessage, 10);
-
-				for (i=0; i < 4; i++) {
-					canbusTxBuffer[i] = asciiMessage[i];
-				}
-
-				canbusTxBuffer[6] = (uint8_t) tempPotRaw >> 6;
-				canbusTxBuffer[7] = (uint8_t) tempPotRaw;
-
-				canbusTXsetup(010, 8, 0);
-
-			}
-
-			msgChoice++;
+			redLEDoff();
 
 		}
+
+
 
 
 
@@ -128,8 +110,8 @@ int main () {
 //		if (rxID == 0x123 && rxDLC == 2) {
 //			pwmSetDutyCycle((canbusRxDataBuffer[0] << 8) + canbusRxDataBuffer[1]);
 //		}
-//
-//		//canbusTXsetup(rxID, rxDLC, 0); 	// This just echos the last received message
+
+		//canbusTXsetup(rxID, rxDLC, 0); 	// This just echos the last received message
 
 	}
 
@@ -149,11 +131,12 @@ void init() {
 	adcInit();
 
 	// Initialize PWM generation
-	pwmInit();
+	motorInit();
 
 	// Initialize timer-based interrupts
 	timerInit();
 
+	// Initialize CAN bus
 	canbusInit();
 
 	// TODO: Initialize PID with EEPROM values
@@ -161,4 +144,15 @@ void init() {
 
 	// Enable Global Interrupts
 	sei();
+}
+
+ISR(BADISR_vect)
+{
+    // This should not ever happen!
+	// If this function executes, an unhandled interrupt occured.
+
+	while (1) {
+		redLEDon();
+		grnLEDon();
+	}
 }

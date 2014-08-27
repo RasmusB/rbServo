@@ -25,13 +25,17 @@ SOFTWARE.
 
 #include <avr/io.h>
 #include "board.h"
-#include "pwm.h"
+#include "timer.h"
 
-#define RED_LED_PIN PC4
+#define RED_LED_PIN PC5
 #define RED_LED_DDR DDRC
 #define RED_LED_PORT PORTC
 
-#define MOTOR_EN_PIN PB4
+#define GRN_LED_PIN PC6
+#define GRN_LED_DDR DDRC
+#define GRN_LED_PORT PORTC
+
+#define MOTOR_EN_PIN PB2
 #define MOTOR_EN_DDR DDRB
 #define MOTOR_EN_PORT PORTB
 
@@ -39,19 +43,30 @@ SOFTWARE.
 #define MOTOR_FAULT_DDR DDRD
 #define MOTOR_FAULT_PORT PORTD
 
+#define MOTOR_PWMA_PIN PD2
+#define MOTOR_PWMA_DDR DDRD
+#define MOTOR_PWMA_PORT PORTD
+
+#define MOTOR_PWMB_PIN PC1
+#define MOTOR_PWMB_DDR DDRC
+#define MOTOR_PWMB_PORT PORTC
+
 void boardInit () {
 
-	RED_LED_DDR |= _BV(RED_LED_PIN);	// Normal output
-	MOTOR_EN_DDR |= _BV(MOTOR_EN_PIN);	// Normal output
-	// MOTOR_FAULT_DDR already input
+	RED_LED_DDR |= _BV(RED_LED_PIN);		// Normal output
+	GRN_LED_DDR |= _BV(GRN_LED_PIN);		// Normal output
+	MOTOR_EN_DDR |= _BV(MOTOR_EN_PIN);		// Normal output
+	// MOTOR_FAULT_DDR is input by default
+	MOTOR_PWMA_DDR |= _BV(MOTOR_PWMA_PIN);	// Controlled by HW PWM
+	MOTOR_PWMB_DDR |= _BV(MOTOR_PWMB_PIN);	// Controlled by HW PWM
 }
 
-void motorENon() {
+void boardMotorEnable() {
 
 	MOTOR_EN_PORT |= _BV(MOTOR_EN_PIN);
 }
 
-void motorENoff() {
+void boardMotorDisable() {
 
 	MOTOR_EN_PORT &= ~_BV(MOTOR_EN_PIN);
 }
@@ -69,4 +84,29 @@ void redLEDoff() {
 void redLEDtoggle() {
 
 	RED_LED_PORT ^= _BV(RED_LED_PIN);
+}
+
+void redLEDpwm( uint8_t dutyCycle ) {
+
+	timerSetRedLEDdutyCycle ( dutyCycle );
+}
+
+void grnLEDon() {
+
+	GRN_LED_PORT |= _BV(GRN_LED_PIN);
+}
+
+void grnLEDoff() {
+
+	GRN_LED_PORT &= ~_BV(GRN_LED_PIN);
+}
+
+void grnLEDtoggle() {
+
+	GRN_LED_PORT ^= _BV(GRN_LED_PIN);
+}
+
+void grnLEDpwm( uint8_t dutyCycle ) {
+
+	timerSetGrnLEDdutyCycle ( dutyCycle );
 }

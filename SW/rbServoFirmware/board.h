@@ -27,10 +27,24 @@ SOFTWARE.
 
 void boardInit ( void );
 
+void boardMotorEnable( void );
+
+void boardMotorDisable( void );
+
 void redLEDon ( void );
 
 void redLEDoff ( void );
 
 void redLEDtoggle ( void );
+
+void redLEDpwm ( uint8_t dutyCycle );
+
+void grnLEDon ( void );
+
+void grnLEDoff ( void );
+
+void grnLEDtoggle ( void );
+
+void grnLEDpwm ( uint8_t dutyCycle );
 
 #endif /* BOARD_H_ */

@@ -25,9 +25,12 @@ SOFTWARE.
 #ifndef TIMER_H_
 #define TIMER_H_
 
-extern volatile uint8_t secondTick;
+extern volatile uint8_t run1HzLoop;
+extern volatile uint8_t run10HzLoop;
+extern volatile uint8_t run100HzLoop;
 
 void timerInit ( void );
-void timerSetPWMdutyCycle ( uint8_t );
+void timerSetRedLEDdutyCycle ( uint8_t );
+void timerSetGrnLEDdutyCycle ( uint8_t );
 
 #endif /* TIMER_H_ */

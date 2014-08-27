@@ -28,5 +28,6 @@ SOFTWARE.
 void adcInit( void );
 uint16_t adGetValueVbatt( void );
 uint16_t adGetValuePot( void );
+uint16_t adGetValueIsense( void );
 
 #endif /* AD_H_ */

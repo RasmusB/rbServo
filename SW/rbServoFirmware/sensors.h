@@ -30,5 +30,7 @@ uint16_t sensorVBattGetRaw(void);
 uint16_t sensorVBattGetValue(void);
 uint16_t sensorPotGetRaw(void);
 int16_t sensorPotGetValue(void);
+uint16_t sensorIsenseGetRaw(void);
+uint16_t sensorIsenseGetValue(void);
 
 #endif /* SENSORS_H_ */

@@ -37,6 +37,9 @@ extern uint8_t	sensorPotScaleValueA;
 extern uint8_t	sensorPotScaleValueB;
 extern int16_t	sensorPotScaleOffset;
 
+extern uint8_t	sensorIsenseScaleValueA;
+extern uint8_t	sensorIsenseScaleValueB;
+
 void eepromReadConfiguration ();
 void eepromWriteConfiguration ();
 

@@ -26,13 +26,16 @@ SOFTWARE.
 #include <avr/interrupt.h>
 #include "board.h"
 
-#define AD_CHANNEL_COUNT 2
+#define AD_CHANNEL_COUNT 3
 
-#define ADMUX_VBATT 0x43
+#define ADMUX_VBATT 0x42
 #define ADBUFFER_VBATT 0
 
-#define ADMUX_POT 0x44
+#define ADMUX_POT 0x46
 #define ADBUFFER_POT 1
+
+#define ADMUX_ISENSE 0xC8
+#define ADBUFFER_ISENSE 2
 
 volatile uint16_t adDataBuffer[AD_CHANNEL_COUNT];
 
@@ -46,18 +49,31 @@ uint16_t adGetValuePot( void ) {
 	return adDataBuffer[ADBUFFER_POT];
 }
 
+uint16_t adGetValueIsense( void ) {
+
+	return adDataBuffer[ADBUFFER_ISENSE];
+}
+
+
 void adcInit() {
 
 	// Set prescaler to 8 (16Mhz/8 = 2MHz)
 	ADCSRA |= _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0);
 
-	ADMUX = ADMUX_POT;
+	// Enable internal Aref circuitry
+	ADCSRB |= _BV(AREFEN);
+
+	ADMUX = ADMUX_VBATT;
 
 	ADCSRA |= _BV(ADEN) | _BV(ADIE);	// Enable ADC & interrupt
-	ADCSRA |= _BV(ADSC);					// Start first conversion
+	ADCSRA |= _BV(ADSC);				// Start first conversion
 }
 
 ISR(ADC_vect) {
+
+	// This interrupt is triggered when the conversion is done.
+	// The result is saved to the correct buffer, and the ADMUX
+	// register is updated before restarting the conversion.
 
 	if ( ADMUX  == ADMUX_VBATT ) {
 		adDataBuffer[ADBUFFER_VBATT] = ADCL;
@@ -67,6 +83,11 @@ ISR(ADC_vect) {
 	else if (ADMUX == ADMUX_POT ) {
 		adDataBuffer[ADBUFFER_POT] = ADCL;
 		adDataBuffer[ADBUFFER_POT] += (ADCH << 8);
+		ADMUX = ADMUX_ISENSE;
+	}
+	else if (ADMUX == ADMUX_ISENSE ) {
+		adDataBuffer[ADBUFFER_ISENSE] = ADCL;
+		adDataBuffer[ADBUFFER_ISENSE] += (ADCH << 8);
 		ADMUX = ADMUX_VBATT;
 	}
 
